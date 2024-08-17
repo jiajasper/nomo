@@ -1,0 +1,6 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'nomocodes - ideas to life with design, no-code and AI'
+theme = "hextra"
+
+
