@@ -1,0 +1,47 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  body {
+    @apply bg-[#181818] text-white font-sans min-h-screen;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+
+  .blog-card, .course-card {
+    @apply rounded-lg ansition-all duration-300 hover:scale-105;
+  }
+
+  .blog-card a, .course-card a {
+    @apply text-white no-underline block h-full border-1 border-transparent;
+  }
+
+  .blog-card-image, .course-card-image {
+    @apply w-full h-48 object-cover;
+  }
+
+  .blog-card-content, .course-card-content {
+    @apply p-6;
+  }
+
+  .blog-card-title, .course-card-title {
+    @apply text-xl font-semibold mb-2 transition-colors duration-300;
+  }
+
+  .blog-card-preview, .course-card-description {
+    @apply text-gray-300 mb-4;
+  }
+
+  .section-title {
+    @apply text-xl font-bold mb-6 text-left;
+  }
+
+  .social-icon {
+    @apply w-8 h-8 rounded-full mx-1;
+  }
+}

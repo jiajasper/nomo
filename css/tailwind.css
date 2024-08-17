@@ -1,0 +1,17 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom styles */
+@layer components {
+  .custom-img-class {
+    @apply max-w-[300px] h-auto;
+  }
+}
+
+/* Add any other custom styles here */
+@layer utilities {
+    .custom-style {
+      /* Your custom CSS here */
+    }
+  }
