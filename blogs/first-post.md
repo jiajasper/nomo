@@ -1,11 +1,13 @@
 ---
 title: Understanding AIGC - What It Is and Its Impact on Content Creation
 date: 2024-08-18
-image: '/images/aigc.jpg'
+image: /images/aigc.jpeg
 preview: AIGC is revolutionizing how we create content, but what exactly is it? Dive into the meaning and implications of AIGC in this comprehensive blog post.
 ---
 
 # Understanding AIGC: What It Is and Its Impact on Content Creation
+
+![AI generated content](/images/aigc.jpeg)
 
 In the rapidly evolving landscape of technology, **AIGC** (Artificial Intelligence-Generated Content) is emerging as a groundbreaking innovation that is reshaping how content is created and consumed. But **what is AIGC**, and why is it generating so much buzz? In this post, we'll explore the **meaning of AIGC**, its applications, and its potential impact on various industries.
 

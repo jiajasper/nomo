@@ -6,9 +6,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (courseSection) {
         // Add course cards
         const courses = [
-            { title: 'No-code 101', description: 'Free 3-part intro course to no-code and learn all the essential fundamentals!', link: 'https://www.youtube.com/watch?v=eP7WTFnYJc4&list=PLo6zuODywwnN3zgAQmTF_diaHqWkOyhyG', image: '/images/nocode-intro.png' },
-            { title: 'Thread Clone w/ Flutterflow', description: 'Build Threads/Twitter-like social media apps with Flutterflow. A 3-hour course with project template provided!', link: 'https://portal.nomo.codes/flutterflow-workshop/', image: '/images/thread-clone.png' },
-            { title: 'No-code Langchain AI App', description: 'Free crash course for non-techies to learn the fundamentals of building a Langchain AI app with zero code needed!', link: 'https://aichat.nomo.codes/', image: '/images/langchainapp.jpg' },
+            { 
+                title: 'No-code 101', 
+                description: 'Free 3-part intro course to no-code and learn all the essential fundamentals!', 
+                link: 'https://www.youtube.com/watch?v=eP7WTFnYJc4&list=PLo6zuODywwnN3zgAQmTF_diaHqWkOyhyG', 
+                image: '/images/nocode-intro.png' 
+            },
+            { 
+                title: 'Thread Clone w/ Flutterflow', 
+                description: 'Build Threads/Twitter-like social media apps with Flutterflow. A 3-hour course with project template provided!', 
+                link: 'https://portal.nomo.codes/flutterflow-workshop/', 
+                image: '/images/thread-clone.png' 
+            },
+            { 
+                title: 'No-code Langchain AI App', 
+                description: 'Free crash course for non-techies to learn the fundamentals of building a Langchain AI app with zero code needed!', 
+                link: 'https://aichat.nomo.codes/', 
+                image: '/images/langchainapp.jpg' 
+            },
         ];
 
         courses.forEach(course => {
@@ -46,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const slug = urlParams.get('slug');
         if (slug) {
+            console.log('Fetching blog post:', slug);
             fetch(`blogs/${slug}.md?_=${new Date().getTime()}`)
                 .then(response => {
                     if (!response.ok) {
@@ -54,9 +70,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     return response.text();
                 })
                 .then(markdown => {
+                    console.log('Markdown content:', markdown);
                     const { metadata, content } = parseMarkdown(markdown);
+                    console.log('Parsed metadata:', metadata);
+                    console.log('Parsed content:', content);
                     updateMetadata(metadata);
-                    blogContent.innerHTML = marked.parse(content);
+                    
+                    // Configure marked options
+                    marked.setOptions({
+                        breaks: true,
+                        gfm: true,
+                        baseUrl: metadata.baseUrl || '',
+                    });
+
+                    // Custom image renderer
+                    const renderer = new marked.Renderer();
+                    renderer.image = function(href, title, text) {
+                        console.log('Image renderer called:', { href, title, text });
+                        // Check if the href is a full URL
+                        if (href && !/^https?:\/\//i.test(href)) {
+                            // If not, prepend the baseUrl if it exists
+                            href = (metadata.baseUrl || '') + href;
+                        }
+                        console.log('Final image href:', href);
+                        return `<img src="${href}" alt="${text || ''}" title="${title || ''}" class="markdown-image">`;
+                    };
+
+                    marked.use({ renderer });
+
+                    // Render the content
+                    const renderedContent = marked.parse(content);
+                    console.log('Rendered content:', renderedContent);
+                    blogContent.innerHTML = renderedContent;
+                    blogContent.classList.add('markdown-content');
+
+                    // Log image elements for debugging
+                    console.log('Image elements:', blogContent.querySelectorAll('img'));
                 })
                 .catch(error => {
                     console.error('Error fetching blog post:', error);
@@ -71,7 +120,7 @@ function createCourseCard(course) {
     article.className = 'course-card';
     article.innerHTML = `
         <a href="${course.link}" target="_blank" rel="noopener noreferrer" class="block h-full">
-            <img class="course-card-image" src="${course.image || 'https://via.placeholder.com/400x200'}" alt="${course.title}">
+            <img class="course-card-image" src="${course.image}" alt="${course.title}">
             <div class="course-card-content">
                 <h3 class="course-card-title">${course.title}</h3>
                 <p class="course-card-description">${course.description}</p>

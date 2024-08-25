@@ -34,7 +34,8 @@ function generateIndex() {
             slug: path.basename(file, '.md'),
             title: metadata.title || 'Untitled',
             date: metadata.date || 'No date',
-            preview: metadata.preview || 'No preview available'
+            preview: metadata.preview || 'No preview available',
+            image: metadata.image || '' // Include the image field
         };
     });
 
